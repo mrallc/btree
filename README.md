@@ -2,7 +2,8 @@ an asynchronous copy-on-write (c.o.w.) b-tree in javascript; see
 http://en.wikipedia.org/wiki/B-tree for details on b-tree's.
 
 "asynchronous" means that all methods require a callback and return
-nothing directly. in other words, this implementation is event-driven.
+nothing directly. in other words, this implementation is completely
+non-blocking and event-driven.
 
 "cow" means that the entire b-tree is a pure immutable value,
 represented by its root key. all mutations create a new root key;

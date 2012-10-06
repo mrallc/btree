@@ -1,6 +1,6 @@
 {
     "name": "btree",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": {
         "name": "mike andrews",
         "email": "mra@xoba.com",
@@ -34,7 +34,10 @@
         "copy-on-write",
         "cow",
         "asynchronous",
-        "database"
+        "database",
+        "big data",
+        "b-tree",
+        "data structure"
     ],
     "engine": {
         "node": ">=0.8.0"

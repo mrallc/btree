@@ -2,7 +2,7 @@
 
 var p = {
     name: "btree",
-    version: "1.0.0",
+    version: "1.0.1",
     author: {
 	name: "mike andrews",
 	email: "mra@xoba.com",
@@ -29,7 +29,7 @@ var p = {
         url: "http://github.com/mrallc/btree/raw/master/LICENSE-2.0"
     }],
     keywords: [
-	"btree","async","copy-on-write","cow","asynchronous","database"
+	"btree","async","copy-on-write","cow","asynchronous","database","big data","b-tree","data structure"
     ],
     engine: {
 	node: ">=0.8.0"

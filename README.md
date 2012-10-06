@@ -1,28 +1,29 @@
 ### asynchronous copy-on-write b-tree in javascript
 
-see http://en.wikipedia.org/wiki/B-tree for details on b-tree's. b-tree's are important 
-because they're a fundamental building-block of databases.
+see http://en.wikipedia.org/wiki/B-tree for details on b-tree's. 
+they're a fundamental building-block of databases and one of the best
+and most powerful ways known to mankind for enabling random access.
 
-to install and run a simple demo using npm.js @ https://npmjs.org/package/btree ---
+to install the b-tree code and then run a simple demo using node/npm.js @ https://npmjs.org/package/btree ---
 
     npm install btree
-    npm start
+    npm start btree
     
 "asynchronous" means that all methods require a callback and return
 nothing directly. in other words, this implementation is completely
 non-blocking and event-driven.
 
-"cow" means that the entire b-tree is a pure immutable value,
-represented by its root key. all mutations create a new root key;
-i.e., a change three levels down in the b-tree causes modifications to
-the upper levels as well, including creating a new root that
-references that change down below.
+"copy-on-write" (cow) means that the entire b-tree is a pure immutable value,
+represented by its root key. all mutations create a new root object;
+i.e., a new version three levels down in the b-tree creates new versions of nodes in
+the upper levels as well, including creating the new root which
+references that change down below. 
 
-the two main methods are "add" and "scan". "get" and "create" are
-really just special cases of "add" and "scan". the b-tree relies on a
-key/value store, the simplest example of which is included as "kv.js".
+the two main methods are `add` and `scan`; `get` and `create` are
+really just special cases. the b-tree relies on a
+key/value store, the simplest example of which is included as `kv.js`.
 
-run "simple.js" for an ultra-simple demo, and "demo.js" for a more
+run `simple.js` for an ultra-simple demo, and `demo.js` for a more
 involved one. 
 
 bug reports and pull requests will be welcomed! thanks in advance.

@@ -658,8 +658,8 @@ var create = function(args) {
 	print: print,
     };
     
-}
+};
 
 module.exports = {
     create: create
-}
+};

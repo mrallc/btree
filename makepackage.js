@@ -2,7 +2,6 @@
 
 var p = {
     "name": "btree",
-    "private": true,
     "version": "1.0.0",
     "author": {
 	name: "mike andrews",
@@ -12,7 +11,7 @@ var p = {
     "homepage": "https://github.com/mrallc/btree",
     "description": "asynchronous copy-on-write btree",
     "scripts": {
-	"start": "node test.js"
+	"start": "node demo.js"
     },
     "dependencies": {
 	"underscore": "1.4.1"

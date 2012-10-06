@@ -259,17 +259,21 @@ var create = function(args) {
 	    return children.length;
 	};
 
-	this.toString = function(cb,prefix) {
+	this.toString = function(cb,prefix,isTail) {
 
 	    if (!prefix) {
 		prefix = "";
 	    }
 
+	    if (isTail === undefined) {
+		isTail = true;
+	    }
+	    
 	    var lines = [];
-
-	    lines.push(getArg(args,"keysToString")(keys));
+	    lines.push(prefix + (isTail ? "└── " : "├── ")+ getArg(args,"keysToString")(keys));
 	    
 	    (function pc(i) {
+		
 		if (i < children.length) {
 		    
 		    kv.get(children[i][idFieldName],function(err,data) {
@@ -280,18 +284,15 @@ var create = function(args) {
 			    c.toString(function(err,y) {
 				lines.push(y);
 				pc(i+1);
-			    },prefix + " . ");
+			    }, prefix + (isTail ? "    " : "│   "), i===children.length-1);
 			}
 		    });
 
 		    
 		} else {
-		    var out = [];
-		    _.each(lines,function(x) {
-			out.push(prefix + x);
-		    });
-		    cb(null, out.join("\n"));
+		    cb(null, lines.join("\n"));
 		}
+		
 	    })(0);
 	    
 	};
@@ -562,7 +563,7 @@ var create = function(args) {
 
 		    var j = (ascending ? i : n-i-1);
 
-		    var lesser = (j == 0 ? node.getChild(j) : undefined);
+		    var lesser = (j === 0 ? node.getChild(j) : undefined);
 		    var key = node.getKey(j);
 		    var greater = node.getChild(j+1);
 		    

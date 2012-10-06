@@ -177,9 +177,9 @@ var values = (function() {
     var list = lim(25,"CNGAHEKQMFWLTZDPRXYS".split(""));
     
     if (false) {
-	for (var i=0; i<80; i++) {
+	for (var i=0; i<200; i++) {
 	    i = "000" + i;
-	    i = i.substring(i.length-5,i.length);
+	    i = i.substring(i.length-3,i.length);
 	    list.push("X" + i);
 	}
 	shuffle(list);

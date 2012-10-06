@@ -11,7 +11,7 @@ var p = {
     "homepage": "https://github.com/mrallc/btree",
     "description": "asynchronous copy-on-write btree",
     "scripts": {
-	"start": "node demo.js"
+	"start": "node simple.js"
     },
     "dependencies": {
 	"underscore": "1.4.1"

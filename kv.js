@@ -25,7 +25,7 @@ module.exports = {
 	var v = JSON.stringify(json);
 	var key = hash(v);
 	cache[key] = v;
-	console.log({storing: key, value: v});
+	console.log({kv_stored: key, value: v});
 	async(cb,null,key);
     },
 

@@ -34,9 +34,53 @@ var newSelf = function() {
     return self;
 };
 
+var defaultArgs = {
+    order: 2,
+    kv: require("./kv"),
+    canReplacePayloads: true,
+    keyExtractor: function(a) {
+	if (a === undefined || a === null) {
+	    return undefined;
+	} else {
+	    return a.key;
+	}
+    },
+    keyComparator: function(a,b) {
+	a = a.toString();
+	b = b.toString();
+	if (a<b) {
+	    return -1;
+	} else if (a>b) {
+	    return +1;
+	} else {
+	    return 0;
+	}
+    },
+    keysToString: function(keys) {
+	var out = [];
+	_.each(keys,function(x) {
+	    out.push(x.key);
+	});
+	return out.join(", ");
+    },
+    aggs: {}
+};
+
+var getArg = function(args,item) {
+    var arg =  args[item] || defaultArgs[item];
+    if (!arg) {
+	throw new Error("need arg: " + item);
+    }
+    return arg;
+}
+
 var create = function(args) {
-    
-    var order = args.order;
+
+    if (!args) {
+	args = defaultArgs;
+    }
+
+    var order = getArg(args,"order");
 
     if (order < 2) {
 	throw new Error("order must be 2 or greater");
@@ -47,8 +91,8 @@ var create = function(args) {
     var maxKeySize = 2 * minKeySize;
     var maxChildrenSize = maxKeySize + 1;
 
-    var kex = args.keyExtractor;
-    var rawKeyComparator = args.keyComparator;
+    var kex = getArg(args,"keyExtractor");
+    var rawKeyComparator = getArg(args,"keyComparator");
 
     var keyComparator = (function() {
 	return function(a,b) {
@@ -75,7 +119,7 @@ var create = function(args) {
 	    }
 	});
 
-	_.each(args.aggs,function(v,k) {
+	_.each(getArg(args,"aggs"),function(v,k) {
 	    aggs.push({name: k, type: 'client', priority: 1, f: v});
 	});
 
@@ -97,7 +141,7 @@ var create = function(args) {
 
     })();
     
-    var kv = args.kv;
+    var kv = getArg(args,"kv");
     
     function Node(_self) {
 	
@@ -223,9 +267,7 @@ var create = function(args) {
 
 	    var lines = [];
 
-	    (function() {
-		lines.push(args.keysToString(keys)); 
-	    })();
+	    lines.push(getArg(args,"keysToString")(keys));
 	    
 	    (function pc(i) {
 		if (i < children.length) {
@@ -451,7 +493,7 @@ var create = function(args) {
 		var node = new Node(data);
 
 		if (keyExists(node,value)) {
-		    if (args.canReplacePayloads) {
+		    if (getArg(args,"canReplacePayloads")) {
 			// replace the item
 			node.resetKey(value);
 			node.store(function(err,key) {
@@ -579,11 +621,14 @@ var create = function(args) {
     
     var get = function(root,value,cb) {
 	var done = function() {
-	    cb(null);
+	    cb(null,null);
 	}
-	scan(root,value,true, function(x) {
+	scan(root,value,true, function(err,x) {
+	    if (err) {
+		cb(err);
+	    }
 	    if (kex(x) === value) {
-		cb(x);
+		cb(null,x);
 	    } else {
 		done();
 	    }

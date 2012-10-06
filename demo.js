@@ -24,12 +24,6 @@ var config = (function() {
 
 	order: 2,
 
-	firstKeyFieldName: 'f',
-	keysFieldName: 'k',
-	childrenFieldName: 'c',
-	idFieldName: 'i',
-	aggsFieldName: 'a',
-
 	kv: require("./kv"),
 
 	canReplacePayloads: true,
@@ -145,41 +139,27 @@ var f = function(root) {
 	
 	console.log(require("./box")(x));
 	
-	if (false) {
 
-	    tree.get(root,"T",function(x) {
-		console.log("got:",x);
-	    });
-
-	    tree.kv.get(root,function(err,data) {
-		console.log(root + ": ",JSON.stringify(data,null,2));
-	    });
-	    
-
-	} else {
-
-	    var done = function() { 
-		console.log("DONE SCANNING; total = " + total); 
-	    };
-	    
-	    var cb =  (function() { 
-		var i = 0;
-		return function(err,x) {
-		    if (err) {
-			throw err;
-		    }
-		    console.log(++i + ". got " + JSON.stringify(x));
-		    var out =  x[keyName] < 'L';
-		    if (!out) {
-			done();
-		    }
-		    return out;
-		};
-	    })();
-
-	    tree.scan(root, "D", true, cb, done );
-	}
+	var done = function() { 
+	    console.log("DONE SCANNING; total = " + total); 
+	};
 	
+	var cb =  (function() { 
+	    var i = 0;
+	    return function(err,x) {
+		if (err) {
+		    throw err;
+		}
+		console.log(++i + ". scanned " + JSON.stringify(x));
+		var out =  x[keyName] < 'L';
+		if (!out) {
+		    done();
+		}
+		return out;
+	    };
+	})();
+
+	tree.scan(root, "D", true, cb, done );
 	
     });
 };
@@ -194,7 +174,7 @@ var values = (function() {
 
     // inspired by http://cis.stvincent.edu/html/tutorials/swd/btree/btree.html
     
-    var list = lim(20,"CNGAHEKQMFWLTZDPRXYS".split(""));
+    var list = lim(25,"CNGAHEKQMFWLTZDPRXYS".split(""));
     
     if (false) {
 	for (var i=0; i<80; i++) {
@@ -224,7 +204,8 @@ var values = (function() {
     };
 
     if (config.canReplacePayloads) {
-	// deletion is handled in the client; i.e., keys stay in btree, but payloads are modified:
+	
+	// deletion is handled in the client; i.e., keys stay in b-tree, but payloads are modified:
 	
 	del("H");
 	del("M");

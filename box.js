@@ -1,49 +1,54 @@
 var _ = require("underscore");
 
-module.exports = function(str) {
-    
-    var margin = " ";
-    
-    var file = [];
+// just puts a "box" around a string
 
-    var x = 0;
-    _.each(str.split("\n"),function(z) {
-	z = z.replace(/\t/g,"    ");
-	var len = z.length;
+var margin = " ";
+var tab = "    ";
+
+module.exports = function(str) {
+
+    var width = 0;
+
+    var file = [];
+    _.each(str.split("\n"),function(line) {
+	line = line.replace(/\t/g,tab);
+	var len = line.length;
 	if (len > 0) {
-	    if (len > x) {
-		x = len;
+	    if (len > width) {
+		width = len;
 	    }
 	}
-	file.push(z);
+	file.push(line);
     });
 
-
-    var lines = [];
-
-    var tb = function() {
+    var horizontal = function() {
 	var line = [];
 	line.push("+");
-	for (var i = 0; i<x+2*margin.length; i++) {
+	for (var i = 0; i<width+2*margin.length; i++) {
 	    line.push("-");
 	}
 	line.push("+");
 	return line.join("");
     };
 
-    lines.push(tb());
-    _.each(file,function(z) {
-	if (z.length < x) {
-	    var ws = [];
-	    for (var i=0; i<x-z.length; i++) {
-		ws.push(" ");
+    var lines = [];
+
+    lines.push(horizontal());
+
+    _.each(file,function(line) {
+	if (line.length < width) {
+	    var whiteSpace = [];
+	    for (var i=0; i<width-line.length; i++) {
+		whiteSpace.push(" ");
 	    }
-	    z+=ws.join("");
+	    line += whiteSpace.join("");
 	}
-	lines.push("|" + margin + z + margin + "|");
+	lines.push("|" + margin + line + margin + "|");
     });
 
-    lines.push(tb());
+    lines.push(horizontal());
 
     return lines.join("\n");
+
 };
+

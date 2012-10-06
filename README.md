@@ -1,8 +1,9 @@
 ### asynchronous copy-on-write b-tree in javascript
 
 see http://en.wikipedia.org/wiki/B-tree for details on b-tree's. 
-they're a fundamental building-block of databases and one of the best
-and most powerful ways known to mankind for enabling random access.
+they're a fundamental building-block of databases or "big data," and one of the best
+and most powerful ways known to mankind for enabling random access
+to large structures.
 
 to install the b-tree code and then run a simple demo using node/npm.js @ https://npmjs.org/package/btree ---
 
@@ -11,7 +12,7 @@ to install the b-tree code and then run a simple demo using node/npm.js @ https:
     
 "asynchronous" means that all methods require a callback and return
 nothing directly. in other words, this implementation is completely
-non-blocking and event-driven.
+non-blocking, event-driven, and thus naturally high-performance.
 
 "copy-on-write" (cow) means that the entire b-tree is a pure immutable value,
 represented by its root key. all mutations create a new root object;

@@ -1,6 +1,13 @@
-an asynchronous copy-on-write (c.o.w.) b-tree in javascript; see
-http://en.wikipedia.org/wiki/B-tree for details on b-tree's.
+### asynchronous copy-on-write b-tree in javascript
 
+see http://en.wikipedia.org/wiki/B-tree for details on b-tree's. b-tree's are important 
+because they're a fundamental building-block of databases.
+
+to install and run a simple demo using npm.js @ https://npmjs.org/package/btree ---
+
+    npm install btree
+    npm start
+    
 "asynchronous" means that all methods require a callback and return
 nothing directly. in other words, this implementation is completely
 non-blocking and event-driven.

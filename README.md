@@ -14,7 +14,7 @@ the two main methods are "add" and "scan". "get" and "create" are
 really just special cases of "add" and "scan". the b-tree relies on a
 key/value store, the simplest example of which is included as "kv.js".
 
-see "simple.js" for an ultra-simple demo, and "demo.js" for a more
+run "simple.js" for an ultra-simple demo, and "demo.js" for a more
 involved one. 
 
 bug reports and pull requests will be welcomed! thanks in advance.
